@@ -4,12 +4,33 @@ function addBox() {
   const canvas = document.getElementById('canvas');
   const box = document.createElement('div');
   box.className = 'box';
-  box.contentEditable = true;
-  box.innerText = 'Type here...';
   box.style.top = `${50 + boxCount * 10}px`;
   box.style.left = `${50 + boxCount * 10}px`;
-  box.draggable = true;
 
+  // Create content area
+  const content = document.createElement('div');
+  content.contentEditable = true;
+  content.innerText = 'Type here...';
+  content.style.minHeight = '80px';
+
+  // Create remove button
+  const removeBtn = document.createElement('button');
+  removeBtn.innerText = '×';
+  removeBtn.style.position = 'absolute';
+  removeBtn.style.top = '2px';
+  removeBtn.style.right = '2px';
+  removeBtn.style.background = 'red';
+  removeBtn.style.color = 'white';
+  removeBtn.style.border = 'none';
+  removeBtn.style.cursor = 'pointer';
+  removeBtn.style.padding = '2px 6px';
+  removeBtn.onclick = () => box.remove();
+
+  box.appendChild(removeBtn);
+  box.appendChild(content);
+
+  // Make box draggable
+  box.draggable = true;
   box.addEventListener('dragstart', (e) => {
     e.dataTransfer.setData('text/plain', null);
     box.dataset.dragging = true;
@@ -31,10 +52,6 @@ function addBox() {
     if (draggingBox) {
       delete draggingBox.dataset.dragging;
     }
-  });
-
-  box.addEventListener('dblclick', () => {
-    box.remove();
   });
 
   canvas.appendChild(box);
