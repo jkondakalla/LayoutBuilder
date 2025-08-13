@@ -6,10 +6,13 @@ body {
 #canvas {
   position: relative;
   width: 100%;
-  height: 80vh;
+  min-height: 80vh; /* Initial height */
   border: 2px dashed #ccc;
-  overflow: hidden;
+  overflow-y: auto; /* Enables vertical scrolling */
+  overflow-x: hidden;
+  padding-bottom: 100px; /* Optional: space at bottom */
 }
+
 
 .box {
   position: absolute;
