@@ -6,6 +6,7 @@ function addBox() {
   box.className = 'box';
   box.style.top = `${50 + boxCount * 10}px`;
   box.style.left = `${50 + boxCount * 10}px`;
+  box.style.position = 'absolute';
 
   // Create content area
   const content = document.createElement('div');
@@ -24,7 +25,11 @@ function addBox() {
   removeBtn.style.border = 'none';
   removeBtn.style.cursor = 'pointer';
   removeBtn.style.padding = '2px 6px';
-  removeBtn.onclick = () => box.remove();
+  removeBtn.style.zIndex = '10';
+  removeBtn.onclick = () => {
+    box.remove();
+    updateCanvasHeight();
+  };
 
   box.appendChild(removeBtn);
   box.appendChild(content);
@@ -51,9 +56,24 @@ function addBox() {
     const draggingBox = document.querySelector('.box[data-dragging="true"]');
     if (draggingBox) {
       delete draggingBox.dataset.dragging;
+      updateCanvasHeight();
     }
   });
 
   canvas.appendChild(box);
   boxCount++;
+  updateCanvasHeight();
+}
+
+function updateCanvasHeight() {
+  const canvas = document.getElementById('canvas');
+  const boxes = canvas.querySelectorAll('.box');
+  let maxBottom = 0;
+
+  boxes.forEach(box => {
+    const bottom = box.offsetTop + box.offsetHeight;
+    if (bottom > maxBottom) maxBottom = bottom;
+  });
+
+  canvas.style.height = `${Math.max(maxBottom + 50, window.innerHeight * 0.8)}px`;
 }
