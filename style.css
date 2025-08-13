@@ -6,7 +6,7 @@ body {
 #canvas {
   position: relative;
   width: 100%;
-  min-height: 80vh; /* Initial height */
+  min-height: 200vh; /* Initial height */
   border: 2px dashed #ccc;
   overflow-y: auto; /* Enables vertical scrolling */
   overflow-x: hidden;
